@@ -15,141 +15,6 @@
     },
     "basePath": "/v1",
     "paths": {
-        "/object/": {
-            "get": {
-                "tags": [
-                    "object"
-                ],
-                "description": "get all objects",
-                "operationId": "ObjectController.GetAll",
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/models.Object"
-                        }
-                    },
-                    "403": {
-                        "description": ":objectId is empty"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "object"
-                ],
-                "description": "create object",
-                "operationId": "ObjectController.Create",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "The object content",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.Object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "{string} models.Object.Id"
-                    },
-                    "403": {
-                        "description": "body is empty"
-                    }
-                }
-            }
-        },
-        "/object/{objectId}": {
-            "get": {
-                "tags": [
-                    "object"
-                ],
-                "description": "find object by objectid",
-                "operationId": "ObjectController.Get",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "objectId",
-                        "description": "the objectid you want to get",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/models.Object"
-                        }
-                    },
-                    "403": {
-                        "description": ":objectId is empty"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "object"
-                ],
-                "description": "update the object",
-                "operationId": "ObjectController.Update",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "objectId",
-                        "description": "The objectid you want to update",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "The body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.Object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/models.Object"
-                        }
-                    },
-                    "403": {
-                        "description": ":objectId is empty"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "object"
-                ],
-                "description": "delete the object",
-                "operationId": "ObjectController.Delete",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "objectId",
-                        "description": "The objectId you want to delete",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "{string} delete success!"
-                    },
-                    "403": {
-                        "description": "objectId is empty"
-                    }
-                }
-            }
-        },
         "/project/": {
             "get": {
                 "tags": [
@@ -189,6 +54,63 @@
                     },
                     "403": {
                         "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/record/": {
+            "post": {
+                "tags": [
+                    "record"
+                ],
+                "description": "create record",
+                "operationId": "RecordController.CreateRecord",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for record content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.RecordForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int} models.RecordListResult"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/record/{id}": {
+            "get": {
+                "tags": [
+                    "record"
+                ],
+                "description": "get system by code",
+                "operationId": "RecordController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The key for staticblock",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.RecordResult"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
                     }
                 }
             }
@@ -447,22 +369,6 @@
                 }
             }
         },
-        "models.Object": {
-            "title": "Object",
-            "type": "object",
-            "properties": {
-                "ObjectId": {
-                    "type": "string"
-                },
-                "PlayerName": {
-                    "type": "string"
-                },
-                "Score": {
-                    "type": "integer",
-                    "format": "int64"
-                }
-            }
-        },
         "models.Profile": {
             "title": "Profile",
             "type": "object",
@@ -491,6 +397,84 @@
                     "format": "int64"
                 },
                 "ProjectName": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Record": {
+            "title": "Record",
+            "type": "object",
+            "properties": {
+                "ColumnNum": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "FileFullName": {
+                    "type": "string"
+                },
+                "Message": {
+                    "type": "string"
+                },
+                "ProjectName": {
+                    "type": "string"
+                },
+                "RecordId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "RowNum": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "SystemCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.RecordForm": {
+            "title": "RecordForm",
+            "type": "object",
+            "properties": {
+                "ColumnNum": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "FileFullName": {
+                    "type": "string"
+                },
+                "Message": {
+                    "type": "string"
+                },
+                "ProjectName": {
+                    "type": "string"
+                },
+                "RowNum": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "SystemCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.RecordResult": {
+            "title": "CodeInfo",
+            "type": "object",
+            "properties": {
+                "RecordInfo": {
+                    "$ref": "#/definitions/models.Record"
+                },
+                "code": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "info": {
                     "type": "string"
                 }
             }
@@ -543,10 +527,6 @@
     },
     "tags": [
         {
-            "name": "object",
-            "description": "Operations about object\n"
-        },
-        {
             "name": "user",
             "description": "Operations about Users\n"
         },
@@ -557,6 +537,10 @@
         {
             "name": "system",
             "description": "Operations about System\n"
+        },
+        {
+            "name": "record",
+            "description": "Operations about Record\n"
         }
     ]
 }

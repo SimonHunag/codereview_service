@@ -34,7 +34,7 @@ func init() {
 
 		beego.NSNamespace("/record",
 			beego.NSInclude(
-				&controllers.UserController{},
+				&controllers.RecordController{},
 			),
 		),
 	)
